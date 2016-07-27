@@ -1,0 +1,108 @@
+FROM centos
+MAINTAINER lishouyan@me.com
+
+RUN yum install -y net-tools \
+        wget \
+        openssh-clients \
+        gcc gcc-c++ kernel-devel; yum install -y pcre pcre-devel zlib zlib-devel openssl openssl-devel \
+        php-mcrypt libmcrypt libmcrypt-devel \
+        libxml2 libxml2-devel \ 
+        bzip2 bzip2-devel \
+        curl-devel \
+        libjpeg.x86_64 libpng.x86_64 freetype.x86_64 libjpeg-devel.x86_64 libpng-devel.x86_64 freetype-devel.x86_64 \
+        libjpeg-turbo libjpeg-turbo-devel libjpeg-turbo-static libjpeg-turbo-utils \
+        libc-client.x86_64 \
+        uw-imap-devel \
+        libxslt-devel \
+        zip unzip autoconf
+
+
+##### HTOP
+# htop http://hisham.hm/htop/releases/
+# yum install ncurses-devel
+#####
+
+##### nginx 
+# 1. gzip 模块需要 zlib 库 ( 下载: http://www.zlib.net/ )  zlib-1.2.8.tar.gz
+# 2. rewrite 模块需要 pcre 库 ( 下载: http://www.pcre.org/ )  pcre-8.21.tar.gz
+# 3. ssl 功能需要 openssl 库 ( 下载: http://www.openssl.org/ )  openssl-1.0.1.tar.gz
+# http://nginx.org/download/nginx-1.10.1.tar.gz
+#./configure --sbin-path=/home/service/nginx/nginx \
+#--conf-path=/home/service/nginx/conf/nginx.conf \
+#--pid-path=/home/service/nginx/nginx.pid \
+#--with-http_ssl_module \
+#--with-pcre=../pcre2-10.20 \
+#--with-zlib=../zlib-1.2.8 \
+#--with-openssl=../openssl-1.0.1t \
+#--with-http_stub_status_module \
+#--user=nginx \
+#--group=nginx
+####
+
+##### install mysql-server
+# yum -y install ncurses-devel
+# yum -y install cmake gcc g++ bison ncurses-devel zlib
+# cmake https://cmake.org/files/v3.6/cmake-3.6.0-rc2.tar.gz
+#    cmake \
+#    -DCMAKE_INSTALL_PREFIX=/home/service/mysql \
+#    -DMYSQL_DATADIR=/home/service/mysql/data \
+#    -DSYSCONFDIR=/etc \
+#    -DWITH_MYISAM_STORAGE_ENGINE=1 \
+#    -DWITH_INNOBASE_STORAGE_ENGINE=1 \
+#    -DWITH_MEMORY_STORAGE_ENGINE=1 \
+#    -DWITH_READLINE=1 \
+#    -DMYSQL_UNIX_ADDR=/home/service/mysql/mysql.sock \
+#    -DMYSQL_TCP_PORT=3306 \
+#    -DENABLED_LOCAL_INFILE=1 \
+#    -DWITH_PARTITION_STORAGE_ENGINE=1 \
+#    -DEXTRA_CHARSETS=all \
+#    -DDEFAULT_CHARSET=utf8 \
+#    -DDEFAULT_COLLATION=utf8_general_ci
+# 5.7 ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQL-5.7/mysql-5.7.13.tar.gz
+# 5.6 http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.23.tar.gz
+# 二进制包 http://cdn.mysql.com//Downloads/MySQL-5.6/mysql-5.6.31-linux-glibc2.5-x86_64.tar.gz 
+# 安装后执行这个命令 ./scripts/mysql_install_db --user=mysql --basedir=/home/service/mysql --datadir=/home/service/mysql/data
+#####
+
+##### python-mysql-replication 
+# https://python-mysql-replication.readthedocs.io/en/latest/installation.html
+#####
+
+##### godep
+# wget https://github.com/kr/heroku-buildpack-go/raw/master/linux-amd64/bin/godep
+# cp godep /usr/sbin/
+#####
+
+##### go mysql es
+# Install Go and set your GOPATH
+# Install godep go get github.com/tools/godep
+# go get github.com/siddontang/go-mysql-elasticsearch, it will print some messages in console, skip it. :-)
+# cd $GOPATH/src/github.com/siddontang/go-mysql-elasticsearch
+# make
+# ./bin/go-mysql-elasticsearch -config=./etc/river.toml
+#####
+
+##### river 
+# yum install python-setuptools
+# easy_install pymysql
+# easy_install cherrypy
+# git clone git://github.com/noplay/python-mysql-replication.git ; cd python-mysql-replication ; python setup.py install
+# elasticsearch-river-mysql
+# python-mysql-replication
+# Elasticsearch的 index --> DB ， Elasticsearch的type --> table， Elasticsearch的Document -->对应table的一行记录row， Document的Field --> table里面的column
+#####
+
+#####
+# http://ftp.jaist.ac.jp/pub/mysql/Downloads/Connector-J/
+# logStash rpm -ivh jdk-8u91-linux-i586.rpm
+# ./bin/plugin install logstash-input-jdbc
+#####
+
+##### elasticsearch
+# yum install java-1.7.0-openjdk -y
+# https://download.elastic.co/elasticsearch/release/org/elasticsearch/distribution/tar/elasticsearch/2.3.3/elasticsearch-2.3.3.tar.gz
+# tar -zxvf  -C .
+# ./bin/elasticsearch
+# ./bin/plugin install lmenezes/elasticsearch-kopf
+# ./bin/plugin install mobz/elasticsearch-head
+#####
