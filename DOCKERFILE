@@ -14,7 +14,12 @@ RUN yum install -y net-tools \
         libc-client.x86_64 \
         uw-imap-devel \
         libxslt-devel \
-        zip unzip autoconf
+        zip unzip autoconf \
+        java-1.7.0-openjdk \
+        ncurses-devel \
+
+USER work
+WORKDIR /home/work/
 
 
 ##### HTOP
@@ -61,6 +66,7 @@ RUN yum install -y net-tools \
 # 5.7 ftp://ftp.mirrorservice.org/sites/ftp.mysql.com/Downloads/MySQL-5.7/mysql-5.7.13.tar.gz
 # 5.6 http://dev.mysql.com/get/Downloads/MySQL-5.6/mysql-5.6.23.tar.gz
 # 二进制包 http://cdn.mysql.com//Downloads/MySQL-5.6/mysql-5.6.31-linux-glibc2.5-x86_64.tar.gz 
+# yum install libaio*
 # 安装后执行这个命令 ./scripts/mysql_install_db --user=mysql --basedir=/home/service/mysql --datadir=/home/service/mysql/data
 #####
 
